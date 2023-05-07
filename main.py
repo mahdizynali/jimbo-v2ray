@@ -7,30 +7,27 @@ ip_address = "104.17.240.0/20"
 splitted = ip_address.split('.')
 print(splitted)
 
-
-starting_number = payload["start"]
-ending_number = payload["end"]
-ending_number = ending_number + 1
 start_time = datetime.now()
 
 def ip_scanner(ip_address):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    socket.setdefaulttimeout(2)
-    result = sock.connect_ex((ip_address, 443))
+    socket.setdefaulttimeout(1)
+    result = sock.connect_ex((ip_address, payload["port"]))
     if result == 0:
         return 1
     else:
         return 0
 live_ip = []
 
-def execute():
-    for ip in range(starting_number, ending_number):
-        ip_address = splitted[0]+"."+splitted[1]+"."+splitted[2]+"." + str(ip)
-        if (ip_scanner(ip_address)):
-            live_ip.append(ip_address)
-            print(ip_address, "is live")
 
-execute()
+# for ip in range(payload["end_point"] + 1):
+for ip in range(5):
+    ip_address = splitted[0]+"."+splitted[1]+"."+splitted[2]+"." + str(ip)
+    if (ip_scanner(ip_address)):
+           live_ip.append(ip_address)
+           print(ip_address, "is live")
+
+
 end_time = datetime.now()
 total_time = end_time - start_time
 
