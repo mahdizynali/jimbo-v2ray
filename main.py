@@ -3,9 +3,9 @@ import time
 from datetime import datetime
 from utils.config import *
 
-ip_address = "104.17.240.0/20"
-splitted = ip_address.split('.')
-print(splitted)
+# range_ip = payload["range_ips"]
+range_ip = "104.17.240.0/20"
+final_range = range_ip.replace(range_ip[-4::1],"")
 
 start_time = datetime.now()
 
@@ -22,7 +22,8 @@ live_ip = []
 
 # for ip in range(payload["end_point"] + 1):
 for ip in range(5):
-    ip_address = splitted[0]+"."+splitted[1]+"."+splitted[2]+"." + str(ip)
+    ip_address = final_range + str(ip)
+    
     if (ip_scanner(ip_address)):
            live_ip.append(ip_address)
            print(ip_address, "is live")
