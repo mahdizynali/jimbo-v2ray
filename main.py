@@ -1,13 +1,10 @@
 import socket
 import time
-from datetime import datetime
 from utils.config import *
 
 # range_ip = payload["range_ips"]
 range_ip = "104.17.240.0/20"
 final_range = range_ip.replace(range_ip[-4::1],"")
-
-start_time = datetime.now()
 
 def ip_scanner(ip_address):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,11 +25,7 @@ for ip in range(5):
            live_ip.append(ip_address)
            print(ip_address, "is live")
 
-
-end_time = datetime.now()
-total_time = end_time - start_time
-
-print("Scanning completed in: ", total_time)
+print("done")
 
 
 
