@@ -10,6 +10,6 @@ with open (directory + "/ipv4.txt", "r") as file:
 payload = {
     'range_ips' : ips,
     'port' : 443,
-    'strat' : 0,
+    'start' : 0,
     'end' : 255
 }
