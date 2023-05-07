@@ -5,29 +5,7 @@ from utils.config import *
 # range_ip = payload["range_ips"]
 range_ip = "104.17.240.0/20"
 final_range = range_ip.replace(range_ip[-4::1],"")
-
-def ip_scanner(ip_address):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    socket.setdefaulttimeout(1)
-    result = sock.connect_ex((ip_address, payload["port"]))
-    if result == 0:
-        return 1
-    else:
-        return 0
 live_ip = []
-
-
-# for ip in range(payload["end_point"] + 1):
-for ip in range(5):
-    ip_address = final_range + str(ip)
-    
-    if (ip_scanner(ip_address)):
-           live_ip.append(ip_address)
-           print(ip_address, "is live")
-
-print("done")
-
-
 
 # def upload (ip):
 #     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -53,4 +31,19 @@ print("done")
 #             break
 #     print(time.time() - t0)
 
-# download("104.17.240.2")
+def ip_scanner(ip_address):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    socket.setdefaulttimeout(1)
+    res = sock.connect_ex((ip_address, payload["port"]))
+    if res == 0:
+        return True
+    
+# for ip in range(payload["end_point"] + 1):
+for ip in range(30):
+    ip_address = final_range + str(ip)
+    
+    if (ip_scanner(ip_address)):
+           live_ip.append(ip_address)
+           print(ip_address, "is live")
+
+print("done")
