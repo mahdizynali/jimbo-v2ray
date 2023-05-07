@@ -7,29 +7,33 @@ range_ip = "104.17.240.0/20"
 final_range = range_ip.replace(range_ip[-4::1],"")
 live_ip = []
 
-# def upload (ip):
-#     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#     a = b"a" * 100_000_0  # 100 MB of data
-#     s.connect((ip, 443))
-#     t0 = time.time()
-#     s.send(a)
-#     s.close()
-#     print(time.time() - t0)
+def upload (ip):
+    session_up = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    packet = b"a" * 1000000 # 0.1 MB of data
+    session_up.connect((ip, payload["port"]))
+    t0 = time.time()
+    session_up.send(packet)
+    session_up.close()
+    print(time.time() - t0)
 
 
-# def download (ip):
-#     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#     s.bind((ip, 443))
-#     s.listen()
-#     conn, addr = s.accept()
-#     s = 0
-#     t0 = time.time()
-#     while True:
-#         data = conn.recv(256*1024)
-#         s += len(data)
-#         if s == 100_000_000:
-#             break
-#     print(time.time() - t0)
+def download (ip):
+    session_down = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try :
+        session_down.bind((ip, payload["port"]))
+        session_down.listen()
+        conn, addr = session_down.accept()
+        session_down = 0
+        t0 = time.time()
+        while True:
+            data = conn.recv(256*1024)
+            session_down += len(data)
+            if session_down == 1000000:
+                break
+        print(time.time() - t0)
+    except :
+        print(ip, " fault")
+        
 
 def ip_scanner(ip_address):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -39,11 +43,13 @@ def ip_scanner(ip_address):
         return True
     
 # for ip in range(payload["end_point"] + 1):
-for ip in range(30):
+for ip in range(3):
     ip_address = final_range + str(ip)
-    
     if (ip_scanner(ip_address)):
            live_ip.append(ip_address)
            print(ip_address, "is live")
+           upload(ip_address)
+           download(ip_address)
+           print("="*20)
 
 print("done")
