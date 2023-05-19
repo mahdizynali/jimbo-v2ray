@@ -1,3 +1,6 @@
+# Authored By Mahdi Zeinali
+# github : github.com/mahdizynali
+
 from utils.config import *
 from utils.Scanner import *
 
