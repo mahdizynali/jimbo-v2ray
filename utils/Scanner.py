@@ -61,4 +61,3 @@ def download_speed_test(n_bytes: int,timeout: int, ips) -> None:
         print("download speed : ",download_speed, "   latency : ",latency)
     except :
         print(ips, " download faild")
-        
