@@ -37,24 +37,28 @@ def upload (ip) -> None :
         session_up.close()
         print("upload time : ",time.time() - t0)
     except :
-        print(ip, " upload failed")    
+        print(ip, " upload faild")    
 
     
-def download_speed_test(n_bytes: int,timeout: int, ips):
+def download_speed_test(n_bytes: int,timeout: int, ips) -> None:
     
-    start_time = time.perf_counter()
-    r = requests.get(
-        url=f"http://{ips}/__down",
-        params={"bytes": n_bytes},
-        timeout=timeout,
-        headers={"Host": "speed.cloudflare.com"}
-    )
-    total_time = time.perf_counter() - start_time
-    cf_time = float(r.headers.get("Server-Timing").split("=")[1]) / 1000
-    latency = r.elapsed.total_seconds() - cf_time
-    download_time = total_time - latency
+    try :
+        start_time = time.perf_counter()
+        r = requests.get(
+            url=f"http://{ips}/__down",
+            params={"bytes": n_bytes},
+            timeout=timeout,
+            headers={"Host": "speed.cloudflare.com"}
+        )
+        total_time = time.perf_counter() - start_time
+        cf_time = float(r.headers.get("Server-Timing").split("=")[1]) / 1000
+        latency = r.elapsed.total_seconds() - cf_time
+        download_time = total_time - latency
 
-    mb = n_bytes * 8 / (10 ** 6)
-    download_speed = mb / download_time
+        mb = n_bytes * 8 / (10 ** 6)
+        download_speed = mb / download_time
 
-    print("download speed : ",download_speed, "   latency : ",latency)
+        print("download speed : ",download_speed, "   latency : ",latency)
+    except :
+        print(ips, " download faild")
+        
