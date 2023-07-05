@@ -2,15 +2,24 @@ import socket
 import time
 import requests
 from termcolor import colored, cprint
+from multiprocessing import Pool
 
 class scanner :
     '''test aliveness , upload speed, download speed'''
-    def __init__(self, rangeIP, port, epoch) -> None:
+    def __init__(self, rangeIP, port, epoch, num_processes) -> None:
         self.rangeIP = rangeIP
         self.port = port
         self.epoch = epoch
-        self.handler()
-
+        self.num_processes = num_processes
+        self.ip_address = []
+        self.generate_ip()
+        with Pool(processes=num_processes) as pool:
+            pool.map(self.handler, self.ip_address)
+        
+    def generate_ip(self):
+        for ip in range(self.epoch) :
+            self.ip_address.append(self.rangeIP + str(ip))
+            
     def ip_scanner(self, ip) -> bool :
         ''' check whether is an ip alive or not '''
         
@@ -32,8 +41,9 @@ class scanner :
             session_up.send(packet)
             session_up.close()
             cprint("upload time : " + time.time() - t0, "green")
+            return (time.time() - t0)
         except :
-            cprint("upload faild !", "yellow")    
+            return False 
 
         
     def download_speed(self, n_bytes: int,timeout: int, ips) -> None:
@@ -56,20 +66,23 @@ class scanner :
             download_speed = mb / download_time
 
             cprint("download speed : "+ download_speed, "green")
-            cprint("latency : "+ latency, "green")
+            # cprint("latency : "+ latency, "green")
+            return download_speed
         except :
-            cprint("download faild !", 'yellow')
+            return False
 
-    def handler(self) -> None :
+    def handler(self, ip_address) -> None :
         ''' pass elements into processor functions and printout results'''
-        
-        for ip in range(self.epoch):
-            ip_address = self.rangeIP + str(ip)
-            if (self.ip_scanner(ip_address)):
-                print("ip : " + ip_address)
-                self.upload_speed(ip_address)
-                self.download_speed(1000000, timeout=2, ips=ip_address)
+        if (self.ip_scanner(ip_address)):
+            up_spead = self.upload_speed(ip_address)
+            down_spead = self.download_speed(1000000, timeout=2, ips=ip_address)
+            if (up_spead != False and down_spead != False) :
+                cprint("alive ip : " + ip_address, "green")
+                print("upload speed : "+ up_spead , "green")
+                print("download speed : "+ down_spead , "green")
             else:
-                text = ip_address + " down !"
-                cprint(text, 'red')
+                cprint(ip_address + " down !", 'red')
+            print("="*20)
+        else:   
+            cprint(ip_address + " down !", 'red')
             print("="*20)
