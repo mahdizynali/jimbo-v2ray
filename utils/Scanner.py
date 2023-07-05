@@ -1,27 +1,19 @@
 import socket
 import time
 import requests
+from termcolor import colored, cprint
 
 class scanner :
-    
+    '''test aliveness , upload speed, download speed'''
     def __init__(self, rangeIP, port, epoch) -> None:
         self.rangeIP = rangeIP
         self.port = port
         self.epoch = epoch
-        self.run()
-    
-    def run(self) -> None :
-        ''' pass elements into processor functions '''
-        for ip in range(self.epoch):
-            ip_address = self.rangeIP + str(ip)
-            if (self.ip_scanner(ip_address)):
-                print(ip_address)
-                self.upload_speed(ip_address)
-                self.download_speed(1000000, timeout=3, ips=ip_address)
-            print("="*20)
+        self.handler()
 
     def ip_scanner(self, ip) -> bool :
         ''' check whether is an ip alive or not '''
+        
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         socket.setdefaulttimeout(1)
         res = sock.connect_ex((ip, 443))
@@ -30,6 +22,7 @@ class scanner :
         
     def upload_speed (self, ip) -> None :
         ''' send packet into ip ip address in order to check upload speed time '''
+        
         session_up = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         socket.setdefaulttimeout(1)
         packet = b"a" * 100000 # 0.1 MB of data
@@ -38,13 +31,14 @@ class scanner :
             t0 = time.time()
             session_up.send(packet)
             session_up.close()
-            print("upload time : ",time.time() - t0)
+            cprint("upload time : " + time.time() - t0, "green")
         except :
-            print(ip, " upload faild")    
+            cprint("upload faild !", "yellow")    
 
         
     def download_speed(self, n_bytes: int,timeout: int, ips) -> None:
         ''' download initial mount of bytes from specific address to check download speed time '''
+        
         try :
             start_time = time.perf_counter()
             r = requests.get(
@@ -61,6 +55,21 @@ class scanner :
             mb = n_bytes * 8 / (10 ** 6)
             download_speed = mb / download_time
 
-            print("download speed : ", download_speed, " latency : ", latency)
+            cprint("download speed : "+ download_speed, "green")
+            cprint("latency : "+ latency, "green")
         except :
-            print("download faild !")
+            cprint("download faild !", 'yellow')
+
+    def handler(self) -> None :
+        ''' pass elements into processor functions and printout results'''
+        
+        for ip in range(self.epoch):
+            ip_address = self.rangeIP + str(ip)
+            if (self.ip_scanner(ip_address)):
+                print("ip : " + ip_address)
+                self.upload_speed(ip_address)
+                self.download_speed(1000000, timeout=2, ips=ip_address)
+            else:
+                text = ip_address + " down !"
+                cprint(text, 'red')
+            print("="*20)
