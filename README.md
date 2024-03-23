@@ -4,10 +4,8 @@
 <meta name="copyright" content="mahdi zeinali 2023">
 <meta name="keywords" content="mahdi zeinali, mahdizynali, mrl-hsl, mrl, hsl, zeinali, mahdi zynali, jimbo,v2ray">
 
-# jimbo-v2ray
+# تابع قوانین جمهوری اسلامی :)
 this repository contains a jimbo-v2ray script that automatically scan cloudflare range ips and find whiteip list \
 in order to generate v2ray vless & vmess config.
 
 # I'm Still Working on it ...
-
-# تابع قوانین جمهوری اسلامی :)
