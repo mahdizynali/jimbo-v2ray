@@ -10,4 +10,4 @@ in order to generate v2ray vless & vmess config.
 
 # I'm Still Working on it ...
 
-# TODO : put it in github.io page in order to generate online configs
+# تابع قوانین جمهوری اسلامی :)
