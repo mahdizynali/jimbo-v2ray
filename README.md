@@ -1,6 +1,6 @@
 ### Jimbo-v2ray Scanner
 Jimbo-v2ray is a v2ray configs scrapper that automatically crawl the web links \
-in order to find fresh configs and scan for real delay and sing-box download test on your internet.
+in order to find fresh configs and scan for real delay and sing-box download test on your network.
 
 ## Notice
 This version is developing over linux debian versions
@@ -24,4 +24,4 @@ python3 app.py
 ```
 
 
-## Im Starting again to handle this repo, better and stable version also full configurable app and readme will update soon !
+## ✅ Im Starting again to handle this repo, better and stable version also full configurable app and readme will update soon !
