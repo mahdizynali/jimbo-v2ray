@@ -1,5 +1,5 @@
 ### Jimbo-v2ray Scanner
-Jimbo-v2ray is a v2ray configs scrapper that automatically crawl the web links \
+Jimbo-v2ray is a multithread v2ray configs scrapper that automatically crawl the web links \
 in order to find fresh configs and scan for real delay and sing-box download test on your network.
 
 ## Notice
@@ -22,6 +22,5 @@ sudo dpkg -i sing-box_1.12.20_linux_amd64.deb
 ```
 python3 app.py
 ```
-
 
 ## ✅ Im Starting again to handle this repo, better and stable version also full configurable app and readme will update soon !
