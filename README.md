@@ -5,7 +5,7 @@ in order to find fresh configs and scan for real delay and sing-box download tes
 ![alt text](https://raw.githubusercontent.com/mahdizynali/jimbo-v2ray/refs/heads/main/assets/result.png)
 
 ## Notice
-This version is developing over linux debian versions
+This version is developing over linux debian distribution but it works with windows too!
 
 ---
 
