@@ -1,5 +1,5 @@
 ### Jimbo-v2ray Scanner
-Jimbo-v2ray is a multithread v2ray configs scrapper that automatically crawl the web links \
+Jimbo-v2ray is a multithread v2ray configs scrapper, chunk base and AI driven project that automatically crawl the web links \
 in order to find fresh configs and scan for real delay and sing-box download test on your network.
 
 ![alt text](https://raw.githubusercontent.com/mahdizynali/jimbo-v2ray/refs/heads/main/assets/result.png)
